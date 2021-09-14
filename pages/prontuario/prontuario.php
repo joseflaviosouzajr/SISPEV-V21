@@ -1,3 +1,24 @@
+<?php 
+ include "../../class/conexao.php";
+ include "../../class/DocumentoClassificacaoEnf.php";  
+ $documento=new DocumentoClassificacaoEnf();
+ $carteira=$_GET['nr_carteira'];
+ $dadospaciente=null;
+ if (isset($carteira)) {
+
+ 	$documento->setId_carteira($carteira);
+ 
+    $dadospaciente = $documento->localizarCarteira();
+    var_dump($dadospaciente);
+
+ } else {
+ 	var_dump('sem carteira');
+ }
+ 
+ ?>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,12 +49,14 @@
 				<form action="_inserirproduto.php" method="post" style="margin-top: 20px;"> 
 
               <div class="form-group">
-				     <label > DADOS DO PACIENTE  </label> </label></label>
+				     <label > DADOS DO PACIENTE  </label> 
 				     	 </div>
 
 			<div class="form-group">
 				<label >CARTEIRA</label>
-				<input type="number" class="form-control"  name="nrproduto" placeholder="insira o numeror do produto">
+				<input <?php if($dadospaciente){?> value= "TESTE" <?php } ?> type="text" class="form-control"  name="nr_carteira" id="nr_carteira" placeholder="insira o numeror da carteira"> 
+                <span class="input-group-text" id="pesquisar"> <i class="fas fa-search"></i> </span>
+
 		   </div>
 
 		   	<div class="form-group">
@@ -105,18 +128,35 @@
 		<button type="submit" id="tbuton" class="btn btn-success">Cadastrar</button>
 		</div>
           <a  href="index.php">  <button type="button" class="btn btn-primary">voltar</button>    </a>
+
        
 		</form>
 		
 		 
 		</div>
 
-
+        
 			
 	
 
  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+ <script type="text/javascript">
+ 	
+ 	$('#pesquisar').click(function(e)
+ 	{
+           var nr_carteira = $('#nr_carteira').val();
+                      
+              window.location.replace('../../pages/prontuario/prontuario.php?nr_carteira='+nr_carteira) ;   
+                 
+           	 
+         
+  }  );
+ 	
+
+
+ </script>
 
 </body>
 </html>
