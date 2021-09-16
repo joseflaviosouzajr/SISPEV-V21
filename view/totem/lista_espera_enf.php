@@ -2,13 +2,14 @@
 
 
 include "../../class/conexao.php";
- include "../../class/Totem.php";  
+ include "../../model/Totem.php";  
+ include "../../controler/cTotem.php"; 
  
 
  //$prioridade2=$_GET['prioridade'];
 
 
- $listaesperaenf = new Totem();
+ $listaesperaenf = new ControlerTotem();
 //$cadastrar->retirarSenha($prioridade2);
 //$cadastrar->ultimaSenha();
  //echo $prioridade2;

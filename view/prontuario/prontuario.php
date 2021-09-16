@@ -1,7 +1,8 @@
 <?php 
  include "../../class/conexao.php";
- include "../../class/DocumentoClassificacaoEnf.php";  
- $documento=new DocumentoClassificacaoEnf();
+ include "../../model/DocEnf.php";
+ include "../../controler/cDocEnf.php";  
+ $documento=new ControlerDocEnf();
  $carteira=$_GET['nr_carteira'];
  $dadospaciente=null;
  if (isset($carteira)) {
@@ -148,7 +149,7 @@
  	{
            var nr_carteira = $('#nr_carteira').val();
                       
-              window.location.replace('../../pages/prontuario/prontuario.php?nr_carteira='+nr_carteira) ;   
+              window.location.replace('../../view/prontuario/prontuario.php?nr_carteira='+nr_carteira) ;   
                  
            	 
          

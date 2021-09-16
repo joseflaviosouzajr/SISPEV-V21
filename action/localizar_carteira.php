@@ -2,10 +2,11 @@
 
  
 include "../class/conexao.php";
- include "../class/DocumentoClassificacaoEnf.php";  
+include "../model/DocEnf.php"; 
+include "../controler/cDocEnf.php"; 
 
 
-$doc=new DocumentoClassificacaoEnf();
+$doc=new ControlerDocEnf();
 
 $doc->setId_carteira('54321');
  
