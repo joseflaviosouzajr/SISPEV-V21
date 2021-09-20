@@ -49,6 +49,41 @@ class ControlerDocEnf extends DocEnf
 
 }
 
+
+  public function cadastrarClassficacaoEnf(){
+
+       $con = Conexao::getInstance();
+       $inserirprontenf = "insert into prontuario  (`cd_paciente`, `nr_carteira`, `temperatura`, `pas`, `pad`, `sat`, `has`, `diabetes`, `hits_clinica`, `classificacao`, `protocolo` ) values (:cd_paciente , :nr_carteira , :TEMP , :PAS ,  :PAD ,  :SAT, :HAS ,  :DIAB, :HC , :CLARISCO, :protocolo ) " ;
+
+       $stmt=$con->prepare( $inserirprontenf );
+       $stmt->bindParam(':cd_paciente',$this->id_paciente);
+       $stmt->bindParam(':nr_carteira',$this->id_carteira);
+       $stmt->bindParam(':TEMP',$this->temp);
+       $stmt->bindParam(':PAS',$this->pas);
+       $stmt->bindParam(':PAD',$this->pad);
+       $stmt->bindParam(':SAT',$this->saturacao);
+       $stmt->bindParam(':HAS',$this->has);
+       $stmt->bindParam(':DIAB',$this->diabetes);
+       $stmt->bindParam(':HC',$this->historiaclinica);
+       $stmt->bindParam(':CLARISCO',$this->classificacao);
+       $stmt->bindParam(':protocolo',$this->protocolo);
+       $result=$stmt->execute();
+
+
+       if ($result) {
+           echo 'sucesso';
+       } else {
+            echo 'erro';
+       }
+       
+
+  } 
+
+
+       
+
+
+
 }
 
 

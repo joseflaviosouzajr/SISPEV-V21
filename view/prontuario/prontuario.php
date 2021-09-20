@@ -10,8 +10,7 @@
  	$documento->setId_carteira($carteira);
  
     $dadospaciente = $documento->localizarCarteira();
-    var_dump($dadospaciente);
-
+   
  } else {
  	var_dump('sem carteira');
  }
@@ -47,7 +46,7 @@
 
 				
 				 
-				<form action="_inserirproduto.php" method="post" style="margin-top: 20px;"> 
+				<form action="../../action/cad_pront_enf.php" method="post" style="margin-top: 20px;"> 
 
               <div class="form-group">
 				     <label > DADOS DO PACIENTE  </label> 
@@ -55,19 +54,20 @@
 
 			<div class="form-group">
 				<label >CARTEIRA</label>
-				<input <?php if($dadospaciente){?> value= "TESTE" <?php } ?> type="text" class="form-control"  name="nr_carteira" id="nr_carteira" placeholder="insira o numeror da carteira"> 
+				<input <?php if($dadospaciente){ echo "value='".$carteira."' "; } ?> type="text" class="form-control"  name="nr_carteira" id="nr_carteira" > 
+						<input <?php if($dadospaciente){ echo "value='".$dadospaciente->id_paciente."' "; } ?> type="hidden" class="form-control"  name="cd_paciente" id="nr_carteira"> 
                 <span class="input-group-text" id="pesquisar"> <i class="fas fa-search"></i> </span>
 
 		   </div>
 
 		   	<div class="form-group">
 				<label >NOME</label>
-				<input type="number" class="form-control"  name="nrproduto" placeholder="insira o numeror do produto">
+				<input  <?php if($dadospaciente){ echo "value='".$dadospaciente->nome."' disabled"; } ?>  type="text" class="form-control"  name="nm_paciente" >
 		  </div>
 
 			    <div class="form-group">
-				<label >ATENDIMENTO</label>
-				<input type="text" class="form-control"  name="nmproduto" placeholder="insira o nome do produto"  autocomplete="off"  required="">
+				<label >DT NASCIMENTO</label>
+				<input  <?php if($dadospaciente){ echo "value='".$dadospaciente->dt_nascimento."' disabled "; } ?>   type="text" class="form-control"  name="dt_nascimento"  autocomplete="off" >
 				 </div>
 
                   	<div class="form-group">
@@ -76,36 +76,39 @@
 
 			   <div class="form-group">
 				<label >TEMPERATURA</label>
-				<input type="number" class="form-control" name="qtdproduto"  placeholder="Quantidade do produto">
+				<input type="text" class="form-control" name="TEMP"  placeholder="Digite a Temperatura"  required=""  autocomplete="off"  >
 		</div>
 
-			      <div class="form-group">		         	
-               <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                <label class="form-check-label" for="defaultCheck1">  PAS</label>
-                 </div>
+          <div class="form-group">
+				<label >PAS</label>
+				<input type="text" class="form-control" name="PAS"  placeholder="Digite a PAS" required=""  autocomplete="off" >
+		</div>
 
-		             <div class="form-group">		         	
-               <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                <label class="form-check-label" for="defaultCheck1">PAD</label>
-                 </div>
+    <div class="form-group">
+				<label >PAD</label>
+				<input type="text" class="form-control" name="PAD"  placeholder="Digite a PAd" required=""  autocomplete="off">
+		</div>
 
-		         <div class="form-group">		         	
-               <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                <label class="form-check-label" for="defaultCheck1">  SAT</label>
-                 </div>
+		 <div class="form-group">
+				<label >SAT</label>
+				<input type="text" class="form-control" name="SAT"  placeholder="Digite a SAT" required=""  autocomplete="off">
+		</div>
+			  
+
+
 
                      <div class="form-group">		         	
-               <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+               <input class="form-check-input"   name="HAS"  type="checkbox" value="1" id="defaultCheck1">
                 <label class="form-check-label" for="defaultCheck1">HAS</label>
                  </div>
                      <div class="form-group">		         	
-               <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+               <input class="form-check-input"  name="DIAB"  type="checkbox" value="1" id="defaultCheck1">
                 <label class="form-check-label" for="defaultCheck1">DIABETES</label>
                  </div>
 
 		         <div class="form-group">
 				<label >HISTORIA CLINICA</label>
-				<textarea  class="form-control"  name="nmproduto" placeholder="insira o nome do produto"  autocomplete="off"  required="">     </textarea>  
+				<textarea  class="form-control"  name="HC" placeholder="Digite a Historia Clinica do paciente"  autocomplete="off"  required="">     </textarea>  
 				 </div>
 
 		      
@@ -113,12 +116,12 @@
 		    <div class="form-group">
 
 			<label >CLASSIFICACAO</label>
-			<select class="form-control"  name="catproduto"  placeholder="Categoria do produto"  >
-				<option selected>Categoria</option>
-				<option value="1">VERMELHO</option>
-				<option value="2">VERDE</option>
-				<option value="3">AMARELO</option>
-				<option value="4">AZUL</option>
+			<select class="form-control"  required=""   name="CLARISCO"  placeholder="Escolha a Calssificacao do paciente"  >
+				<option value=''>Selecione a Categoria</option>
+				<option value="VERMELHO">VERMELHO</option>
+				<option value="VERDE">VERDE</option>
+				<option value="AMARELO">AMARELO</option>
+				<option value="AZUL">AZUL</option>
 				</select>
 
 		</div>
@@ -126,7 +129,7 @@
 
 
         <div style="text-align: right;">
-		<button type="submit" id="tbuton" class="btn btn-success">Cadastrar</button>
+		<button type="submit" class="btn btn-success">Cadastrar</button>
 		</div>
           <a  href="index.php">  <button type="button" class="btn btn-primary">voltar</button>    </a>
 
