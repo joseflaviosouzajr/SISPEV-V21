@@ -80,6 +80,41 @@ class ControlerDocEnf extends DocEnf
   } 
 
 
+
+
+public function listarAtdColeta(){
+     
+
+       $con = Conexao::getInstance();
+       $listaratdcoleta = "SELECT PO.atendimento , PA.nome , PA.dt_nascimento  FROM PRONTUARIO PO , PACIENTE PA WHERE PROTOCOLO = 'COVID-19' AND PO.cd_paciente = PA.id_paciente";
+       $stmt=$con->prepare($listaratdcoleta);
+             $result=$stmt->execute();
+
+           if ($result) {
+                     
+           while ($reg=$stmt->fetch(PDO::FETCH_OBJ) ) {
+           
+           
+           echo "<tr>"; 
+           echo "<td class='text-center'> ATD: ".$reg->atendimento." </td>";
+           echo "<td class='text-center'> ".$reg->nome."</td>";
+            echo "<td class='text-center'>".$reg->dt_nascimento." </td>";
+           echo "<td class='text-center'>  <a href='../../action/coletarlab.php?cdAtendimento=".$reg->atendimento."' > <i class='fas fa-vial'></i></a></td>";
+           echo "<td class='text-center' > <a href='' > <i class='fas fa-microscope'></i> </a> </td>";
+            echo "</tr>";
+
+
+
+
+           }
+
+       } else {
+        echo "erro";
+       }
+
+
+    }
+
        
 
 
