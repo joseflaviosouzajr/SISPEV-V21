@@ -3,7 +3,7 @@
  include "../../model/DocEnf.php";
  include "../../controler/cDocEnf.php";  
  $documento=new ControlerDocEnf();
- $carteira=$_GET['nr_carteira'];
+ $carteira= (isset($_GET['nr_carteira']))?$_GET['nr_carteira']:null ;
  $dadospaciente=null;
  if (isset($carteira)) {
 
@@ -11,9 +11,7 @@
  
     $dadospaciente = $documento->localizarCarteira();
    
- } else {
- 	var_dump('sem carteira');
- }
+ } 
  
  ?>
 

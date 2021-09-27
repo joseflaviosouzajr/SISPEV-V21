@@ -68,7 +68,7 @@ public function ultimaSenha(){
            echo "<tr>"; 
            echo "<td class='text-center'> Nr: ".$reg->totem." - ".$reg->prioridade."</td>";
            echo "<td class='text-center'> ".$reg->data."</td>";
-           echo "<td class='text-center'><i data-prioridade='".$reg->totem." - ".$reg->prioridade."' class='fas fa-volume-up'></i></td>";
+           echo "<td class='text-center'><i data-nrprioridade='".$reg->totem."' data-priority='".$reg->totem." - ".$reg->prioridade."' data-prioridade='".$reg->prioridade."' class='fas fa-volume-up'></i></td>";
            echo "<td class='text-center' > <a href='../../action/excluirsenha.php?senha=".$reg->totem."'> <i class='fas fa-trash'></i> </a> </td>";
             echo "</tr>";
 
@@ -99,6 +99,27 @@ public function ultimaSenha(){
        }
 
  }
+
+
+ public function senhaChamada(){
+
+  
+       $con = Conexao::getInstance();
+       $alterarchamado = "update  totem set chamado = 'S'  where totem  = :totem";
+       $stmt=$con->prepare( $alterarchamado);
+       $stmt->bindParam(':totem',$this->totem);
+       $result=$stmt->execute();
+
+       if ($result) {
+        echo "suscesso";
+       } else {
+        echo "erro";
+       }
+
+ }
+
+
+ 
 
 
 }

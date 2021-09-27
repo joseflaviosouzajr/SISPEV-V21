@@ -5,7 +5,8 @@ include 'class/Seguranca.php';
 $seguranca= new Seguranca();
 $seguranca->validaSessao();
 $conselho=$_SESSION['conselho'];
-var_dump($conselho);
+$pagina=(isset($_GET['page']))?$_GET['page']:null;
+$prioridade=(isset($_GET['nr_senha']))?$_GET['nr_senha']:null;
 
 
  ?>
@@ -27,15 +28,12 @@ var_dump($conselho);
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(Página atual)</span></a>
+        <a class="nav-link" href="index.php">Lista<span class="sr-only">(Página atual)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Destaques</a>
+        <a id='prontuario-enf' class="nav-link" href="#">Prontuario</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Preços</a>
-      </li>
-      <li class="nav-item dropdown">
+          <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Link dropdown
         </a>
@@ -60,12 +58,27 @@ var_dump($conselho);
 $(document).ready(function(){
 	$.ajax({
 		type:'GET',
-		url:'view/totem/lista_espera_enf.php',
+    <?php if($pagina=='prontenf'){  ?>
+		 url:'view/prontuario/prontuario.php',
+  <?php  } else {?>   
+    url:'view/totem/lista_espera_enf.php',
+  <?php } ?>
 		success:function(data){
 			$('#conteudo').html(data);
 		}
 	});
 });
+
+$('#prontuario-enf').click(function(){
+  $.ajax({
+    type:'GET',
+    url:'view/prontuario/prontuario.php',
+    success:function(data){
+      $('#conteudo').html(data);
+    }
+  });
+});
+
 
  </script>
  </body>
