@@ -150,7 +150,7 @@
  	{
            var nr_carteira = $('#nr_carteira').val();
                       
-              window.location.replace('../../view/prontuario/prontuario.php?nr_carteira='+nr_carteira) ;   
+              window.location.replace('sispep/app/view/prontuario/prontuario.php?nr_carteira='+nr_carteira) ;   
                  
            	 
          

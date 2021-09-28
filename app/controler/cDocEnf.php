@@ -53,7 +53,7 @@ class ControlerDocEnf extends DocEnf
   public function cadastrarClassficacaoEnf(){
 
        $con = Conexao::getInstance();
-       $inserirprontenf = "insert into prontuario  (`cd_paciente`, `nr_carteira`, `temperatura`, `pas`, `pad`, `sat`, `has`, `diabetes`, `hits_clinica`, `classificacao`, `protocolo` ) values (:cd_paciente , :nr_carteira , :TEMP , :PAS ,  :PAD ,  :SAT, :HAS ,  :DIAB, :HC , :CLARISCO, :protocolo ) " ;
+       $inserirprontenf = "insert into prontuario  (`cd_paciente`, `nr_carteira`, `temperatura`, `pas`, `pad`, `sat`, `has`, `diabetes`, `hits_clinica`, `classificacao`, `protocolo` ,   `DT_REGISTRO` ) values (:cd_paciente , :nr_carteira , :TEMP , :PAS ,  :PAD ,  :SAT, :HAS ,  :DIAB, :HC , :CLARISCO, :protocolo , NOW()) " ;
 
        $stmt=$con->prepare( $inserirprontenf );
        $stmt->bindParam(':cd_paciente',$this->id_paciente);
@@ -116,7 +116,44 @@ public function listarAtdColeta(){
     }
 
        
+public function listarAtendidoEnf(){
 
+      $con = Conexao::getInstance();
+       $lista_atd_enf = "SELECT po.atendimento , pa.nome paciente , pa.dt_nascimento , po.classificacao , po.protocolo , u.nome usuario , u.nr_conselho , PO.DT_REGISTRO  FROM usuario u , prontuario po , paciente pa where po.cd_paciente = pa.id_paciente and po.cd_usuario = u.cd_usuario";
+       $stmt=$con->prepare($lista_atd_enf);
+             $result=$stmt->execute();
+
+           if ($result) {
+                     
+           while ($reg=$stmt->fetch(PDO::FETCH_OBJ) ) {
+           
+           
+           echo "<tr>"; 
+           echo "<td class='text-center'> ".$reg->atendimento." </td>";
+           echo "<td class='text-center'> ".$reg->paciente."</td>";
+            echo "<td class='text-center'>".$reg->dt_nascimento." </td>";
+             echo "<td class='text-center'>".$reg->classificacao." </td>";
+             echo "<td class='text-center'>".$reg->protocolo." </td>";
+             echo "<td class='text-center'>".$reg->usuario." </td>";
+              echo "<td class='text-center'>".$reg->nr_conselho." </td>";
+                        echo "<td class='text-center'>".$reg->DT_REGISTRO." </td>";
+                        echo "<td class='text-center'><i  class='fas fa-pen'></i></td>";
+                       echo "<td class='text-center' > <a href='../../action/excluirsenha.php?senha='> <i class='fas fa-trash'></i> </a> </td>";
+                       echo "</tr>";
+
+
+
+
+           }
+
+       } else {
+        echo "erro";
+       }
+
+
+
+
+      }
 
 
 }
