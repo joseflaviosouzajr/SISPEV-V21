@@ -34,6 +34,35 @@ class ControlerLab extends lab
 }
 
 
+ public function resultadoPedidoLab(){
+
+       $con = Conexao::getInstance();
+       $reslaudo = 'update lab_pedido_laudo set resultado = :resultado where cd_pedido = :cd_pedido' ;
+       $stmt=$con->prepare($reslaudo);
+       $stmt->bindParam(':resultado', "positivo");
+       $stmt->bindParam(':cd_pedido', 90);
+
+       var_dump($stmt);
+       $result=$stmt->execute();
+
+
+       if ($result) {
+           echo 'pedido laudado';
+       
+       } else {
+         echo "erro na coleta";
+
+
+}
+
+
+
+   
+       
+}
+
+
+
 }
 
 

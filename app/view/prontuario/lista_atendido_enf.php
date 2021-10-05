@@ -24,19 +24,20 @@
 	<meta charset="utf-8">
 	<title > LISTA DE CLASSIFICADOS DA ENFERMAGEM </title>
 
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
 	<link rel="stylesheet"  href="../../assets/css/bootstrap.css">    
 	<script type="text/javascript"  src="../../assets/js/bootstrap.js"></script>
 
 </head>
 <body>
 
-	<div  class="container" > 
+	<div  class="container-fluid" > 
+    <div class="row">
 
 <div class="col-lg-12">
   
   <table class="table">
-  <thead class="thead-dark">
+  <thead class="bg-success" style="color:white; font-size:12px;">
     <tr>
       <th class='text-center'>ATENDIMENTO</th>
       <th class='text-center'>NOME</th>
@@ -47,6 +48,7 @@
       <th class='text-center' >NR CONSELHO</th>
       <th class='text-center' >DT REGISTRO</th>
        <th class='text-center' >EDITAR</th>
+        <th class='text-center' >ENVIAR</th>
        <th class='text-center' >EXCLUIR</th>
     </tr>
   </thead>
@@ -61,12 +63,14 @@
 
 </div>
 
-
+  </div>
 
 	</div>
 
-     
+      
  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+ <script src="https://kit.fontawesome.com/295172c442.js" crossorigin="anonymous"></script>
 
  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

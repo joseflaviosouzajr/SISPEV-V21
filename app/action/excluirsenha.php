@@ -17,7 +17,7 @@ $totem->excluirSenha();
 
  <script type="text/javascript">
  	
-  window.location.replace('../view/totem/lista_espera_enf.php');
+  window.location.replace('../index.php');
    
 
  </script>

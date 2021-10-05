@@ -56,7 +56,11 @@ public function ultimaSenha(){
      
 
        $con = Conexao::getInstance();
-       $listarsenhas = "select totem , case when prioridade = 'P' then 'PRIORIDADE' ELSE 'NORMAL'  end prioridade  , data from totem where chamado = 'N'  and ativo = 'S'";
+       $listarsenhas = "select totem , case when prioridade = 'P' then 'PRIORIDADE' ELSE 'NORMAL'  end prioridade  ,   
+
+       case when prioridade = 'P' then '1' ELSE '2'  end prioridadelista  ,
+        data 
+       from totem where chamado = 'N'  and ativo = 'S' order by prioridadelista  ";
        $stmt=$con->prepare($listarsenhas);
              $result=$stmt->execute();
 
@@ -69,7 +73,7 @@ public function ultimaSenha(){
            echo "<td class='text-center'> Nr: ".$reg->totem." - ".$reg->prioridade."</td>";
            echo "<td class='text-center'> ".$reg->data."</td>";
            echo "<td class='text-center'><i data-nrprioridade='".$reg->totem."' data-priority='".$reg->totem." - ".$reg->prioridade."' data-prioridade='".$reg->prioridade."' class='fas fa-volume-up'></i></td>";
-           echo "<td class='text-center' > <a href='../../action/excluirsenha.php?senha=".$reg->totem."'> <i class='fas fa-trash'></i> </a> </td>";
+           echo "<td class='text-center' > <a href='action/excluirsenha.php?senha=".$reg->totem."'> <i class='fas fa-trash'></i> </a> </td>";
             echo "</tr>";
 
 
