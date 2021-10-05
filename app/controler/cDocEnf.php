@@ -6,53 +6,40 @@
 class ControlerDocEnf extends DocEnf
 {
 
- public function localizarCarteira(){
+
+
+ public function localizarprontuario(){
 
      $con = Conexao::getInstance();
-     $localizarcarteira = "SELECT
-    id_paciente_fk
+     $localizarprontuario= "SELECT  distinct  1 resp
+
 FROM
-    carteira    ca
+   prontuario po
    
 WHERE
-        ca.nr_carteira = :id_carteira
-    AND  ca.nr_carteira NOT IN (
-    
-    SELECT PO.NR_CARTEIRA FROM PRONTUARIO PO WHERE PO.DELETADO = 'N'
-    AND po.TRANCADO_MED = 'N'
-    
-    
-    )";
-     $stmt=$con->prepare( $localizarcarteira);
-     $stmt->bindParam(':id_carteira',$this->id_carteira);
+        po.cd_paciente = :id_pacinte  and deletado = 'N'  or trancado_med  = 'N'";
+
+     $stmt=$con->prepare($localizarprontuario);
+     $stmt->bindParam(':id_pacinte',$this->id_paciente);
      $result=$stmt->execute();
 
      if ($result) {
 
-
-         $reg=$stmt->fetch(PDO::FETCH_OBJ);
-
-         if(isset($reg->id_paciente_fk)) {
-
-            $this->setId_paciente($reg->id_paciente_fk);
-
-
-
-
-         } else {
-
-            echo '<script>';
-
-             echo 'alert("ESSE PACIENTE SEM ALTA NO SISTEMA OU  AGUARDANDO CLASSIFICACAO");';
-
-            echo '</script>';
-         }
+       $reg=$stmt->fetch(PDO::FETCH_OBJ);
+       return $reg->resp;
          
+     } else {
+         return 0;
+     }
+     
 
 
 
+}
 
-         
+public function pegarDadosPaciente() {
+
+         $con = Conexao::getInstance();
          $localizadocarteira = "select *  from paciente where id_paciente  = :id_paciente";
          $stmt1=$con->prepare($localizadocarteira) ;
          $stmt1->bindParam(':id_paciente',intval($this->id_paciente));
@@ -67,6 +54,94 @@ WHERE
          } else {
              echo "erro consulta paciente";
          }
+
+}
+
+
+
+ public function localizarCarteira(){
+
+     $con = Conexao::getInstance();
+     $localizarcarteira = "SELECT
+    id_paciente_fk
+FROM
+    carteira    ca
+   
+WHERE
+        ca.nr_carteira = :id_carteira ";
+     $stmt=$con->prepare( $localizarcarteira);
+     $stmt->bindParam(':id_carteira',$this->id_carteira);
+     $result=$stmt->execute();
+
+     if ($result) {
+
+
+         $reg=$stmt->fetch(PDO::FETCH_OBJ);
+
+         if(isset($reg->id_paciente_fk)) {
+
+            $this->setId_paciente($reg->id_paciente_fk);
+            $possuiprontuario = $this->localizarprontuario();
+
+            if ($possuiprontuario==0) {
+               
+
+               $this->pegarDadosPaciente();
+                
+
+            } else {
+
+
+                echo '<script>
+
+                if(window.confirm("ESSE PACIENTE PACIENTE POSSUI UM ATENDIMENTO ATIVO")){
+
+                    window.location.replace("../../index.php?page=prontenf");
+
+                } else {
+
+                   window.location.replace("../../index.php?page=prontenf");
+
+                }
+
+
+
+                 </script>';
+
+
+            }
+            
+
+
+
+
+
+         } 
+         else {
+
+             echo '<script>
+
+                if(window.confirm("ESSA CARTEIRA NAO FOI LOCALIZADA")){
+
+                    window.location.replace("../../index.php?page=prontenf");
+
+                } else {
+
+                   window.location.replace("../../index.php?page=prontenf");
+
+                }
+
+
+
+                 </script>';
+         }
+         
+
+
+        
+
+         
+         
 
 
 
