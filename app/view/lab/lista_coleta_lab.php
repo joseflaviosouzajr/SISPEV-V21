@@ -69,17 +69,27 @@ $atdlistalab = new  ControlerDocEnf();
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Título do modal</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <h5 class="modal-title" id="exampleModalLabel">RESULTADO LABORATORIAL - SISPEP</h5>
         </div>
         <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-          <button type="button" class="btn btn-primary">Salvar mudanças</button>
+          <form id='formResultado'>
+
+            <div class="input-group mb-3">
+              <input type="hidden" name="atd" id='atd'>
+              <label class="input-group" for="inputGroupSelect01">RESULTADO:</label>
+              <select required class="form-select" name='resultado' id="inputGroupSelect01">
+                <option selected>SELECIONE O RESULTADO</option>
+                <option value="1">Positivo</option>
+                <option value="2">Negativo</option>
+
+              </select>
+            </div>
+
+            <div>    
+              <button type="submit" class="btn btn-success">Salvar Resultado</button> 
+            </div>
+
+          </form>
         </div>
       </div>
     </div>
@@ -92,13 +102,30 @@ $atdlistalab = new  ControlerDocEnf();
 
   <script type="text/javascript">
 
-   $('.fa-microscope').click(function(e){
-         
-          $('#modalExemplo').modal('show');
-         
+   $('.modal-resultado').click(function(e){
+
+    $('#modalExemplo').modal('show');
+    $('#atd').val($(this).data('atendimento'));
     
 
-    }   );
+  }   );
+
+   $('#formResultado').submit(function(e){
+
+    console.log('aqui');
+
+    $.ajax({
+      type:'POST',
+      url:'../../action/cadresultadolab.php',
+      data:$(this).serialize(),
+      success:function(data){
+        window.location.href='lista_coleta_lab.php';
+      }
+    });
+
+    return false;
+
+  });
 
 </script>
 </body>

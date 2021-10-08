@@ -60,10 +60,7 @@ public function ultimaSenha(){
 
        case when prioridade = 'P' then '1' ELSE '2'  end prioridadelista  ,
         data 
-       from totem ,   where chamado = 'N'  and ativo = 'S' 
-
-       and totem not in (select distinct totem from prontuario)
-       order by prioridadelista  ";
+       from totem where chamado = 'N'  and ativo = 'S' order by prioridadelista  ";
        $stmt=$con->prepare($listarsenhas);
              $result=$stmt->execute();
 

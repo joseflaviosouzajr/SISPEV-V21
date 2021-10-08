@@ -61,7 +61,7 @@ if ($clas_riscoP != 'AZUL'  &&  $contsepse>=2) {
  $protocoloP='COVID-19';
 }
 
-var_dump($nr_carteiraP);
+
 
 
 $documento->setId_paciente($id_pacienteP);

@@ -13,7 +13,6 @@ if (isset($carteira)) {
 	$documento->setId_carteira($carteira);
 
 	$dadospaciente = $documento->localizarCarteira();
-
 } 
 
 if (isset($atd)) {

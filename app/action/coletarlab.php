@@ -8,16 +8,19 @@ $coletarpedido  = new ControlerLab();
 $atd=$_GET['cdAtendimento'];
 
 $coletarpedido->setAtdPedidoLab($atd);
+ //$coletarpedido->getAtdPedidoLab();
+ $coletarpedido->setColetadoPedidoLab('S');
 
-$coletarpedido->setColetadoPedidoLab('S');
+ $coletarpedido->updateResPedidoLab();
 
-$coletarpedido->inserirPedidoLab();
-//$ttt=$coletarpedido->getAtdPedidoLab();
-
-
-
-//var_dump($ttt);
 
 
 
  ?>
+ 
+ <script type="text/javascript">
+     
+  window.location.replace('../view/lab/lista_coleta_lab.php');
+
+
+ </script>

@@ -11,13 +11,13 @@ class ControlerDocEnf extends DocEnf
  public function localizarprontuario(){
 
      $con = Conexao::getInstance();
-     $localizarprontuario= "SELECT  distinct  1 resp
+     $localizarprontuario= "SELECT  distinct  0 resp
 
 FROM
    prontuario po
    
 WHERE
-        po.cd_paciente = :id_pacinte  and deletado = 'N'  or trancado_med  = 'N'";
+        po.cd_paciente = :id_pacinte  and deletado = 'N'  and  trancado_med  = 'N' ";
 
      $stmt=$con->prepare($localizarprontuario);
      $stmt->bindParam(':id_pacinte',$this->id_paciente);
@@ -26,10 +26,14 @@ WHERE
      if ($result) {
 
        $reg=$stmt->fetch(PDO::FETCH_OBJ);
-       return $reg->resp;
+       if (isset($reg->resp)) {
+           return $reg->resp;
+       } else {
+           return 1;
+       }
          
      } else {
-         return 0;
+         echo "ERRO!";
      }
      
 
@@ -83,30 +87,30 @@ WHERE
             $this->setId_paciente($reg->id_paciente_fk);
             $possuiprontuario = $this->localizarprontuario();
 
-            if ($possuiprontuario==0) {
+            if ($possuiprontuario==1) {
                
-
-               $this->pegarDadosPaciente();
+                $dados = $this->pegarDadosPaciente();
+                return $dados;
                 
 
             } else {
-
-
+                
+ 
                 echo '<script>
 
                 if(window.confirm("ESSE PACIENTE PACIENTE POSSUI UM ATENDIMENTO ATIVO")){
 
-                    window.location.replace("../../index.php?page=prontenf");
-
-                } else {
-
                    window.location.replace("../../index.php?page=prontenf");
 
-                }
+                 } else {
+
+                    window.location.replace("../../index.php?page=prontenf");
+
+                 }
 
 
 
-                 </script>';
+                </script>';
 
 
             }
@@ -129,9 +133,7 @@ WHERE
 
                    window.location.replace("../../index.php?page=prontenf");
 
-                }
-
-
+                
 
                  </script>';
          }
@@ -191,7 +193,7 @@ public function listarAtdColeta(){
 
 
  $con = Conexao::getInstance();
- $listaratdcoleta = "SELECT distinct PO.atendimento , PA.nome , PA.dt_nascimento , lp.coletado FROM PRONTUARIO PO LEFT JOIN lab_pedido_laudo lp on po.atendimento = lp.atd_pedido left JOIN PACIENTE PA ON PO.cd_paciente = PA.id_paciente WHERE PROTOCOLO = 'COVID-19' and lp.resultado is null and po.trancado_enf = 'S'";
+ $listaratdcoleta = "SELECT distinct lp.cd_pedido ,lp.resultado, PO.atendimento , PA.nome , PA.dt_nascimento , lp.coletado FROM PRONTUARIO PO LEFT JOIN lab_pedido_laudo lp on po.atendimento = lp.atd_pedido left JOIN PACIENTE PA ON PO.cd_paciente = PA.id_paciente WHERE PROTOCOLO = 'COVID-19'  and po.trancado_enf = 'S'";
  $stmt=$con->prepare($listaratdcoleta);
  $result=$stmt->execute();
 
@@ -209,7 +211,15 @@ public function listarAtdColeta(){
          echo "<td class='text-center'>   <i class='fas fa-vial text-danger'></i></td>"; }
              else {  echo "<td class='text-center'>  <a href='../../action/coletarlab.php?cdAtendimento=".$reg->atendimento."' > <i class='fas fa-vial'></i></a></td>"; }
 
-         echo "<td class='text-center' > <a href='#' > <i class='fas fa-microscope'></i> </a> </td>";
+               if($reg->resultado==1 || $reg->resultado==2) { 
+       echo "<td class='text-center' >  <i class='fas fa-microscope text-danger'></i>  </td>";
+     } elseif($reg->coletado=='N') {  
+       echo "<td class='text-center' > <i class='fas fa-microscope'></i> </td>";
+    } else {
+        echo "<td class='text-center' > <a href='#' > <i class='fas fa-microscope modal-resultado' data-atendimento='".$reg->atendimento."'></i> </a> </td>";
+    }
+
+         
          echo "</tr>";
 
 
@@ -228,7 +238,17 @@ public function listarAtdColeta(){
 public function listarAtendidoEnf(){
 
   $con = Conexao::getInstance();
-  $lista_atd_enf = "SELECT po.atendimento , pa.nome paciente , pa.dt_nascimento , po.classificacao , po.protocolo , u.nome usuario , u.nr_conselho , PO.DT_REGISTRO , po.trancado_enf  FROM usuario u , prontuario po , paciente pa where po.cd_paciente = pa.id_paciente and po.cd_usuario is null";
+  $lista_atd_enf = "SELECT po.atendimento , pa.nome paciente , pa.dt_nascimento , po.classificacao ,
+
+   CASE WHEN po.classificacao =  'VERMELHO' THEN 1  
+  WHEN po.classificacao = 'AMARELO' THEN 2 
+   WHEN po.classificacao = 'VERDE'  THEN  3 
+    WHEN po.classificacao = 'AZUL' THEN   4
+       END  CLALISTA 
+      , CASE WHEN po.protocolo = 'COVID-19'  THEN  1 
+  WHEN po.protocolo =  'SEPSE' THEN  1  ELSE  2  END CLAPROT ,
+   
+   po.protocolo , u.nome usuario , u.nr_conselho , PO.DT_REGISTRO , po.trancado_enf  FROM usuario u , prontuario po , paciente pa where po.cd_paciente = pa.id_paciente and po.cd_usuario is null  ORDER BY   CLALISTA , CLAPROT  , po.atendimento  ";
   $stmt=$con->prepare($lista_atd_enf);
   $result=$stmt->execute();
 
