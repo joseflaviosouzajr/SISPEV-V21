@@ -248,7 +248,8 @@ public function listarAtendidoEnf(){
       , CASE WHEN po.protocolo = 'COVID-19'  THEN  1 
   WHEN po.protocolo =  'SEPSE' THEN  1  ELSE  2  END CLAPROT ,
    
-   po.protocolo , u.nome usuario , u.nr_conselho , PO.DT_REGISTRO , po.trancado_enf  FROM usuario u , prontuario po , paciente pa where po.cd_paciente = pa.id_paciente and po.cd_usuario is null  ORDER BY   CLALISTA , CLAPROT  , po.atendimento  ";
+   po.protocolo , u.nome usuario , u.nr_conselho , PO.DT_REGISTRO , po.trancado_enf  FROM usuario u , prontuario po , paciente pa 
+   where po.cd_paciente = pa.id_paciente and po.cd_usuario = u.cd_usuario  and u.cd_usuario = 1 ORDER BY   CLALISTA , CLAPROT  , po.atendimento  ";
   $stmt=$con->prepare($lista_atd_enf);
   $result=$stmt->execute();
 
