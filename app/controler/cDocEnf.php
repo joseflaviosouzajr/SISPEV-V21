@@ -429,6 +429,97 @@ public function editclassificacaoenf(){
 
 
 
+
+public function listaratdmed(){
+
+
+ $con = Conexao::getInstance();
+ $listaratdmed = "SELECT distinct lp.cd_pedido ,lp.resultado, PO.atendimento , PA.nome , PA.dt_nascimento , po.classificacao , po.protocolo  ,      lp.coletado FROM PRONTUARIO PO LEFT JOIN lab_pedido_laudo lp on po.atendimento = lp.atd_pedido left JOIN PACIENTE PA ON PO.cd_paciente = PA.id_paciente WHERE  po.trancado_enf = 'S' and po.trancado_med = 'N' ";
+ $stmt=$con->prepare($listaratdmed);
+ $result=$stmt->execute();
+
+ if ($result) {
+
+     while ($reg=$stmt->fetch(PDO::FETCH_OBJ) ) {
+
+
+         echo "<tr>"; 
+         echo "<td class='text-center'> ATD: ".$reg->atendimento." </td>";
+         echo "<td class='text-center'> ".$reg->nome."</td>";
+         echo "<td class='text-center'>".$reg->dt_nascimento." </td>";   
+
+          if($reg->classificacao=='AZUL'){ 
+
+            echo "<td class='text-center'><i class='fas fa-circle text-primary'> </i> </td>"; 
+
+         } elseif($reg->classificacao=='AMARELO') {
+
+             echo "<td class='text-center'><i class='fas fa-circle text-warning'> </i> </td>"; 
+
+         }  elseif($reg->classificacao=='VERDE') {
+
+             echo "<td class='text-center'><i class='fas fa-circle text-success'> </i> </td>"; 
+
+         } elseif($reg->classificacao=='VERMELHO') {
+
+             echo "<td class='text-center'><i class='fas fa-circle text-danger'> </i> </td>"; 
+
+         } 
+         
+          if($reg->protocolo=='COVID-19'){ 
+
+              echo "<td class='text-center'><i class='fas fa-lungs-virus text-danger' ></i> </td>"; 
+
+         } elseif  ($reg->protocolo=='SEPSE') { 
+
+                 echo "<td class='text-center'><i class='fas fa-notes-medical text-warning'> </i> </td>"; 
+
+         } else { echo "<td class='text-center'></td>"; 
+                }
+
+
+                    echo "<td class='text-center'><i class='fas fa-volume-up' data-atd='".$reg->atendimento."' data-paciente='".$reg->nome."'></i></td>"; 
+                    
+             
+         echo "</tr>";
+
+
+
+
+     }
+
+ } else {
+    echo "erro";
+}
+
+
+}
+
+
+
+public function dadoatdmed($atd){
+
+
+ $con = Conexao::getInstance();
+ $dadosatdmed = "SELECT distinct  PO.atendimento , PA.nome , PA.dt_nascimento  FROM PRONTUARIO PO LEFT JOIN lab_pedido_laudo lp on po.atendimento = lp.atd_pedido left JOIN PACIENTE PA ON PO.cd_paciente = PA.id_paciente WHERE  po.trancado_enf = 'S' and po.trancado_med = 'N' and PO.atendimento = $atd" ;
+ $stmt=$con->prepare($dadosatdmed);
+ $result=$stmt->execute();
+
+ if ($result) {
+
+      $reg=$stmt->fetch(PDO::FETCH_OBJ);
+
+      return $reg;     
+
+} else {
+    echo "erro";
+}
+
+
+}
+
+
+
 }
 
 
