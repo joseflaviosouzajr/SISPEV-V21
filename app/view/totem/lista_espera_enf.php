@@ -36,7 +36,7 @@ $listaesperaenf = new ControlerTotem();
     <div class="col-lg-12">
       
       <table class="table">
-        <thead class="thead-dark">
+          <thead class="bg-success" style="color:white; font-size:12px;">
           <tr>
             <th class='text-center'>SENHA</th>
             <th class='text-center'>DATA RETIRADA</th>

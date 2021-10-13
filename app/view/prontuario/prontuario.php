@@ -1,4 +1,6 @@
 <?php 
+session_start();
+include '../../class/Seguranca.php';
 include "../../class/conexao.php";
 include "../../model/DocEnf.php";
 include "../../controler/cDocEnf.php";  
@@ -7,6 +9,8 @@ $carteira= (isset($_GET['nr_carteira']))?$_GET['nr_carteira']:null ;
 $atd= (isset($_GET['atd']))?$_GET['atd']:null ;
 $dadospaciente=null;
 $prontuariopaciente=null;
+$seguranca= new Seguranca();
+$seguranca->validaSessao();
 
 if (isset($carteira)) {
 
@@ -47,8 +51,8 @@ if (isset($atd)) {
 
 
 	<div  class= "container align-self-center"  style="margin-top: 40px" >
-
-		<h4>FICHA DE CLASSIFICACAO DA ENFERMAGEM </h4>
+ 
+		<div class='text-center'>   <h4>FICHA DE CLASSIFICACAO DA ENFERMAGEM </h4> </div>
 
 
 
@@ -57,11 +61,11 @@ if (isset($atd)) {
 		<form action="../../action/cad_pront_enf.php" method="post" style="margin-top: 20px;"> 
          <input type="hidden" name="atendimento" <?php if($prontuariopaciente){ echo "value='".$prontuariopaciente->atendimento."' "; } ?> >
 			<div class="form-group">
-				<label > DADOS DO PACIENTE  </label> 
+				<strong > DADOS DO PACIENTE  </strong> 
 			</div>
 
 			<div class="form-group">
-				<label >CARTEIRA</label>
+				<label > <strong> CARTEIRA </strong>  </label>
 
 				<input <?php if($dadospaciente){ echo "value='".$carteira."' "; } else if ($prontuariopaciente) 
 				{ echo "value='".$prontuariopaciente->nr_carteira."' disabled "; } ?> type="text" class="form-control"  name="nr_carteira" id="nr_carteira" > 

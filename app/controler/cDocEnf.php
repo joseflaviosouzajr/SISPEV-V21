@@ -46,7 +46,7 @@ public function pegarDadosPaciente() {
          $con = Conexao::getInstance();
          $localizadocarteira = "select *  from paciente where id_paciente  = :id_paciente";
          $stmt1=$con->prepare($localizadocarteira) ;
-         $stmt1->bindParam(':id_paciente',intval($this->id_paciente));
+         $stmt1->bindParam(':id_paciente', $this->id_paciente );
          $result1=$stmt1->execute();
 
          if ($result1) {
@@ -209,7 +209,7 @@ public function listarAtdColeta(){
          
          if($reg->coletado=='S') { 
          echo "<td class='text-center'>   <i class='fas fa-vial text-danger'></i></td>"; }
-             else {  echo "<td class='text-center'>  <a href='../../action/coletarlab.php?cdAtendimento=".$reg->atendimento."' > <i class='fas fa-vial'></i></a></td>"; }
+             else {  echo "<td class='text-center'>  <a href='action/coletarlab.php?cdAtendimento=".$reg->atendimento."' > <i class='fas fa-vial'></i></a></td>"; }
 
                if($reg->resultado==1 || $reg->resultado==2) { 
        echo "<td class='text-center' >  <i class='fas fa-microscope text-danger'></i>  </td>";

@@ -6,7 +6,6 @@ include "../../controler/cDocEnf.php";
 $documento=new ControlerDocEnf();
 
 $atd= (isset($_POST['atd']))?$_POST['atd']:null ;
-var_dump($atd);
 
  if($atd){
   $dadoatd = $documento->dadoatdmed($atd);
@@ -58,7 +57,7 @@ var_dump($atd);
 
 
 
-		<form action="../../action/cad_pront_enf.php" method="post" style="margin-top: 20px;"> 
+		<form id="prontmed" method="post" style="margin-top: 20px;"> 
          <input type="hidden" name="atendimento" <?php echo "value='".$atd."' "; ?> >
 			<div class="form-group">
 				<label >QUEIXA PRINCIPAL</label>
@@ -118,21 +117,17 @@ var_dump($atd);
 
 	<script type="text/javascript">
 
-		$('#pesquisar').click(function(e)
-		{
-			var nr_carteira = $('#nr_carteira').val();
+  $('#prontmed').submit(function(e){
+  $.ajax({
+  	type:'POST',
+  	url:'action/cadprontmed.php',
+  	data:$(this).serialize(),
+  	success:function(data){
+  		console.log(data);
+  	}
+  })
 
-			if(nr_carteira != '') {
-				window.location.replace('view/prontuario/prontuario.php?nr_carteira='+nr_carteira) ;   
-			}
-
-			
-
-
-
-		}  );
-
-
+  })
 
 	</script>
 

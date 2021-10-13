@@ -8,7 +8,6 @@ $conselho=$_SESSION['conselho'];
 $pagina=(isset($_GET['page']))?$_GET['page']:null;
 $prioridade=(isset($_GET['nr_senha']))?$_GET['nr_senha']:null;
 
-
 ?>
 
 <!DOCTYPE html>
@@ -21,31 +20,49 @@ $prioridade=(isset($_GET['nr_senha']))?$_GET['nr_senha']:null;
 <body>
  <div class="container-fluid"> 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">SISPEP</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Alterna navegação">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a id='list-classificacao' class="nav-link" href="#">Lista Para Classificacao<span class="sr-only">(Página atual)</span></a>
-        </li>
-        <li class="nav-item">
-          <a id='prontuario-enf' class="nav-link" href="#">Prontuario Enf</a>
-        </li>
-        <li class="nav-item">
-          <a id='pacientes-classificados' class="nav-link" href="#">Pacientes Classificados</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user" ></i>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="action/logout.php">sair</a>
-          </div>
-        </li>
-      </ul>
-    </div>
+    <?php if($conselho == 'coren') { ?>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a id='list-classificacao' class="nav-link" href="#">Lista Para Classificacao<span class="sr-only">(Página atual)</span></a>
+          </li>
+          <li class="nav-item">
+            <a id='prontuario-enf' class="nav-link" href="#">Prontuario Enf</a>
+          </li>
+          <li class="nav-item">
+            <a id='pacientes-classificados' class="nav-link" href="#">Pacientes Classificados</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-user" ></i>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="action/logout.php">sair</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    <?php } elseif($conselho == 'colab') { ?>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a id='list-coleta' class="nav-link" href="#">Lista Para Coleta<span class="sr-only">(Página atual)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user" ></i>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="action/logout.php">sair</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+    <?php } ?>
   </nav>
 
   <div id="conteudo"> </div>
@@ -59,15 +76,23 @@ $prioridade=(isset($_GET['nr_senha']))?$_GET['nr_senha']:null;
 
 <script type="text/javascript">
   $(document).ready(function(){
+
    $.ajax({
     type:'GET',
     <?php if($pagina=='prontenf'){  ?>
      url:'view/prontuario/prontuario.php',
    <?php  } elseif ($pagina=='lista_atendido_enf') {?>   
     url:'view/prontuario/lista_atendido_enf.php',
-  <?php } else{  ?>
+    <?php  } elseif ($pagina=='lista_coleta') {?>   
+    url:'view/lab/lista_coleta_lab.php',
+  <?php 
+    } else {  
+      if($conselho == 'coren') {
+  ?>
    url:'view/totem/lista_espera_enf.php',
- <?php } ?>
+  <?php } else {?>
+    url:'view/lab/lista_coleta_lab.php',
+ <?php }} ?>
  success:function(data){
    $('#conteudo').html(data);
  }
