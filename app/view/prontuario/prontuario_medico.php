@@ -58,17 +58,17 @@ $atd= (isset($_POST['atd']))?$_POST['atd']:null ;
 
 
 		<form id="prontmed" method="post" style="margin-top: 20px;"> 
-         <input type="hidden" name="atendimento" <?php echo "value='".$atd."' "; ?> >
+         <input type="hidden" name="atendimento" <?php echo "value='".$atd."'"; ?> >
 			<div class="form-group">
 				<label >QUEIXA PRINCIPAL</label>
-				<textarea  class="form-control"  name="QP_MED" placeholder="Digite a Historia Clinica do paciente"  autocomplete="off"  required="">
+				<textarea  class="form-control"  name="queixa_med" placeholder="Digite a queixa principal do paciente"  autocomplete="off"  required="">
 					
 				</textarea>  
 			</div>
 
 			<div class="form-group">
 				<label >CONDUTA</label>
-				<textarea  class="form-control"  name="CONDUTA" placeholder="Digite a Historia Clinica do paciente"  autocomplete="off"  required="">
+				<textarea  class="form-control"  name="conduta_med" placeholder="Digite a conduta medica"  autocomplete="off"  required="">
 					
 				</textarea>  
 			</div>
@@ -81,7 +81,7 @@ $atd= (isset($_POST['atd']))?$_POST['atd']:null ;
 			<div class="form-group">
 
 				<label >MOTIVO DA ALTA</label>
-				<select class="form-control"  required=""   name="CLARISCO"  placeholder="Escolha a Calssificacao do paciente"  >
+				<select class="form-control"  required=""   name="motivo_alta"  placeholder="Escolha o Motivo da Alta"  >
 					<option value=''>Selecione  o Motivo da Alta</option>
 					<option   value="1">Melhorada</option>
 					<option value="2">Internacao Hospitalar</option>
@@ -120,14 +120,14 @@ $atd= (isset($_POST['atd']))?$_POST['atd']:null ;
   $('#prontmed').submit(function(e){
   $.ajax({
   	type:'POST',
-  	url:'action/cadprontmed.php',
+  	url:'../../action/cadprontmed.php',
   	data:$(this).serialize(),
   	success:function(data){
   		console.log(data);
   	}
-  })
-
-  })
+  });
+  return false;
+  });
 
 	</script>
 

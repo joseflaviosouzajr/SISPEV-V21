@@ -22,6 +22,9 @@
   	 public $has;
   	 public $diabetes;
   	 public $protocolo;
+     public $conduta;
+     public $queixa;
+     public $motivo_alta;
 
    
 public function getId_carteira()
@@ -188,7 +191,40 @@ public function setProtocolo($protocolo)
 }
 
 
+public function getCondulta()
+{
+    return $this->conduta;
+}
+ 
+public function setConduta($conduta)
+{
+    $this->conduta = $conduta;
+    return $this;
+}
 
+
+public function getQueixa()
+{
+    return $this->queixa;
+}
+ 
+public function setQueixa($queixa)
+{
+    $this->queixa = $queixa;
+    return $this;
+}
+
+
+public function getMotivoAlta()
+{
+    return $this->motivo_alta;
+}
+ 
+public function setMotivoAlta($motivo_alta)
+{
+    $this->motivo_alta = $motivo_alta;
+    return $this;
+}
 
 
 

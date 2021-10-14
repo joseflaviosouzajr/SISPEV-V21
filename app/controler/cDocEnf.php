@@ -520,6 +520,32 @@ public function dadoatdmed($atd){
 
 
 
+
+public function cadprontmed(){
+ $cd_usuario_med=3;
+ $con = Conexao::getInstance();
+ $editcadmed = "update prontuario set  cd_usuario_med = :cd_usuario_med , conduta_med = :conduta  , queixa_med = :queixa , motivo_alta= :motivo_alta , dt_registro_med =  NOW() where atendimento = :atendimento "  ;
+
+ $stmt=$con->prepare($editcadmed );
+ $stmt->bindParam(':cd_usuario_med',$cd_usuario_med);
+ $stmt->bindParam(':conduta',$this->conduta);
+ $stmt->bindParam(':queixa',$this->queixa);
+ $stmt->bindParam(':motivo_alta',$this->motivo_alta);
+  $stmt->bindParam(':atendimento',$this->atendimento);
+
+ $result=$stmt->execute();
+
+
+ if ($result) {
+     echo 'sucesso';
+ } else {
+    echo 'erro';
+}
+
+
+} 
+
+
 }
 
 
